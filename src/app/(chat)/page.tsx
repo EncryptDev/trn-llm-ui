@@ -6,6 +6,7 @@ import Image from "next/image"
 import ChatBox from "./ChatBox"
 import { useEffect, useRef, useState } from "react"
 import { ChatState } from "@/types/state"
+import Link from "next/link";
 
 function page() {
 
@@ -96,8 +97,8 @@ function page() {
   };
 
   useEffect(() => {
-    if(loading === false){
-      if(messages.length > 0){
+    if (loading === false) {
+      if (messages.length > 0) {
         const text = messages[messages.length - 1].content;
         speak(text);
       }
@@ -109,7 +110,9 @@ function page() {
     <div className="flex flex-col justify-between items-center min-h-screen bg-gray-800 p-4 pb-24">
       {/* Admin Button */}
       <div className="fixed top-4 right-4">
-        <button className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-700">Admin</button>
+        <Link href={"/upload"}>
+          <button className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-700">Admin</button>
+        </Link>
       </div>
       {/* Welcome message  */}
       {messages.length > 0 ? (<ChatBox loading={loading} messages={messages} />) :
@@ -117,7 +120,7 @@ function page() {
           <div className="flex-grow flex flex-col justify-center items-center">
             <Image src={"/doge.png"} alt="Logo" width={120} height={120} className="mb-5" />
             <div className="text-center">
-              <h1 className="text-3xl">Halo saya training chatbot👋</h1>
+              <h1 className="text-3xl text-white">Halo saya training chatbot👋</h1>
               <p className="text-lg text-gray-400">Saya siap menjawab pertanyaan anda seputar PT Surabaya Autocomp Indonesia</p>
             </div>
           </div>
@@ -127,7 +130,7 @@ function page() {
       <div className="fixed bottom-10  px-4 ">
         <div className="flex gap-4">
           <input
-            className="p-4 w-[750px] max-w-2xl border border-gray-500 rounded-xl bg-gray-800"
+            className="p-4 w-[750px] max-w-2xl border border-gray-500 rounded-xl bg-gray-800 text-white"
             type="text"
             placeholder="Masukkan pertanyaan ..."
             value={query}
@@ -140,7 +143,7 @@ function page() {
               handleSend(val);
             }, 500)
           }} />
-          <button disabled={loading} className={` p-4 rounded-xl ${loading? 'bg-gray-300' : 'bg-white'}`} onClick={() => handleSend()}>
+          <button disabled={loading} className={` p-4 rounded-xl ${loading ? 'bg-gray-300' : 'bg-white'}`} onClick={() => handleSend()}>
             {loading ? (
               <Loader2Icon className="text-black animate-spin" />
             ) : (

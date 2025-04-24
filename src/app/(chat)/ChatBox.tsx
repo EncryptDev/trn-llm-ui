@@ -23,7 +23,7 @@ function ChatBox({ loading, messages }: ChatBoxProps) {
                             </div>
                         )}
                         <p
-                            className={`p-2 my-1 rounded-md w-fit ${msg.role === "user" ? "bg-gray-600 text-right self-end" : " text-left self-start"}`}
+                            className={`p-2 my-1 rounded-md w-fit text-white ${msg.role === "user" ? "bg-gray-600 text-right self-end" : " text-left self-start"}`}
                         >
                             {msg.content}
                         </p>
