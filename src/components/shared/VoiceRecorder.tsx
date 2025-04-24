@@ -1,8 +1,9 @@
 'use client';
 
+import { Mic } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 
-export default function VoiceRecorder() {
+export default function VoiceRecorder({callBack}: {callBack?: (val:string) => void}) {
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState('');
   const recognitionRef = useRef<SpeechRecognition | null>(null);
@@ -10,7 +11,7 @@ export default function VoiceRecorder() {
   useEffect(() => {
     // Inisialisasi SpeechRecognition
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    
+
     if (!SpeechRecognition) {
       console.error('Speech Recognition API tidak didukung di browser ini');
       return;
@@ -24,6 +25,9 @@ export default function VoiceRecorder() {
     recognitionRef.current.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
       setTranscript(transcript);
+      if(callBack){
+        callBack(transcript);
+      }
     };
 
     recognitionRef.current.onerror = (event) => {
@@ -53,41 +57,15 @@ export default function VoiceRecorder() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <button
-        onMouseDown={startRecording}
-        onMouseUp={stopRecording}
-        onTouchStart={startRecording}
-        onTouchEnd={stopRecording}
-        className={`p-4 rounded-full ${isRecording ? 'bg-red-500' : 'bg-gray-200'}`}
-        aria-label="Record voice"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
-          />
-        </svg>
-      </button>
-      
-      <p className="text-sm text-gray-500">
-        {isRecording ? 'Sedang merekam...' : 'Tahan tombol untuk merekam'}
-      </p>
-      
-      {transcript && (
-        <div className="mt-4 p-4 border rounded-lg w-full">
-          <h3 className="font-semibold mb-2">Hasil Transkripsi:</h3>
-          <p>{transcript}</p>
-        </div>
-      )}
-    </div>
+    <button
+      onMouseDown={startRecording}
+      onMouseUp={stopRecording}
+      onTouchStart={startRecording}
+      onTouchEnd={stopRecording}
+      className={`p-4 rounded-xl ${isRecording ? 'bg-red-500' : 'bg-white'}`}
+      aria-label="Record voice"
+    >
+      <Mic className={`size-5 ${isRecording ? 'text-white' : 'text-black'}`} />
+    </button>
   );
 }
