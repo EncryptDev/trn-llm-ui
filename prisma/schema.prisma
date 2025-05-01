@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/@prisma/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Materi {
+  id            String          @id @default(cuid())
+  title         String
+  is_active     Boolean         @default(true)
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+  MateriDetails MateriDetails[]
+
+  @@map("materies")
+}
+
+model MateriDetails {
+  id         String   @id @default(cuid())
+  materi_id  String
+  image      String
+  transcript String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  materi Materi @relation(fields: [materi_id], references: [id], onDelete: Cascade)
+
+  @@map("materi_details")
+}
