@@ -36,9 +36,9 @@ export async function handleUploadFile(file: File, savePath: string, randomizeNa
 
 }
 
-export async function handleDeleteFile(fileName: string, filePath: string) {
+export async function handleDeleteFile( filePath: string) {
     try {
-        const fullPath = path.join(process.cwd(), filePath, fileName);
+        const fullPath = path.join(process.cwd(), `public/${filePath}`);
         await unlink(fullPath);
         return true;
     } catch (error) {

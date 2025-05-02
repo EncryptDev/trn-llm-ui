@@ -6,14 +6,14 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Save, Trash2 } from "lucide-react";
+import { Loader, Loader2Icon, Save, Trash2 } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { getFilePreviewUrl } from "@/lib/utils";
 import { FormDetailMateriEntries } from "@/types/form";
 
 
 interface DetailMateriFormProps {
-    onSubmit: (data: {details: FormDetailMateriEntries[]}) => void;
+    onSubmit: (data: { details: FormDetailMateriEntries[] }) => void;
     initialDetails?: FormDetailMateriEntries[];
     submiting?: boolean;
 
@@ -148,7 +148,17 @@ export default function DetailMateriForm({
 
             <CardFooter>
                 <Button onClick={handleSubmit(handleFormSubmit)} disabled={submiting}>
-                    <Save className="mr-2 h-4 w-4" /> Submit
+                    {submiting ? (
+                        <>
+                            <Loader2Icon className="animate-spin" />
+                            Submiting
+                        </>
+                    ) : (
+                        <>
+                            <Save />
+                            Submit
+                        </>
+                    )}
                 </Button>
             </CardFooter>
         </Card>
