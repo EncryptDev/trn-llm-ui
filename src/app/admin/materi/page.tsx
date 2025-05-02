@@ -4,6 +4,7 @@ import { getAllMateri } from "@/lib/server/materi.action"
 import { PenBoxIcon, PlusCircle, Trash2 } from "lucide-react";
 import Link from "next/link";
 import MateriCard from "./MateriCard";
+import EditMateri from "./EditMateri";
 
 export default async function MateriPage() {
 
@@ -19,7 +20,7 @@ export default async function MateriPage() {
                 <Button className="mt-3"><PlusCircle />Tambah Data</Button>
             </Link>
 
-            <div className="grid grid-cols-12  mt-10 gap-3">
+            <div className="grid grid-cols-12  mt-10 gap-3 mb-12">
                 {materies.map(materi => (
                     <MateriCard materi={materi} key={materi.id}/>
                 ))}
@@ -27,6 +28,7 @@ export default async function MateriPage() {
             </div>
 
             {/* Edit component */}
+            <EditMateri />
 
 
         </div>

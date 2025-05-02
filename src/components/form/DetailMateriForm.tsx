@@ -8,15 +8,13 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Save, Trash2 } from "lucide-react";
 import { Textarea } from "../ui/textarea";
+import { getFilePreviewUrl } from "@/lib/utils";
+import { FormDetailMateriEntries } from "@/types/form";
 
-type FormEntry = {
-    transcript: string;
-    file: File | undefined;
-}
 
 interface DetailMateriFormProps {
-    onSubmit: (data: {details: FormEntry[]}) => void;
-    initialDetails?: FormEntry[];
+    onSubmit: (data: {details: FormDetailMateriEntries[]}) => void;
+    initialDetails?: FormDetailMateriEntries[];
     submiting?: boolean;
 
 }
@@ -31,7 +29,7 @@ export default function DetailMateriForm({
         control,
         handleSubmit,
         reset
-    } = useForm<{ details: FormEntry[] }>({
+    } = useForm<{ details: FormDetailMateriEntries[] }>({
         defaultValues: {
             details: initialDetails
         }
@@ -46,7 +44,7 @@ export default function DetailMateriForm({
         reset({ details: initialDetails })
     }, [initialDetails, reset]);
 
-    const handleFormSubmit = (data: { details: FormEntry[] }) => {
+    const handleFormSubmit = (data: { details: FormDetailMateriEntries[] }) => {
         onSubmit(data);
     }
 
@@ -105,7 +103,7 @@ export default function DetailMateriForm({
                                     const currentValue = field.value
                                     const previewUrl =
                                         typeof currentValue === 'string'
-                                            ? currentValue
+                                            ? getFilePreviewUrl(currentValue)
                                             : currentValue instanceof File
                                                 ? URL.createObjectURL(currentValue)
                                                 : null

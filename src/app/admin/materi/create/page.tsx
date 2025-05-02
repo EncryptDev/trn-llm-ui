@@ -7,12 +7,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { createMateri } from "./action";
 import DetailMateriForm from "@/components/form/DetailMateriForm";
-
-
-type FormEntry = {
-    transcript: string;
-    file: File | undefined;
-}
+import { FormDetailMateriEntries } from "@/types/form";
 
 
 export default function CreatePage() {
@@ -21,7 +16,7 @@ export default function CreatePage() {
     const [submiting, setSubmiting] = useState(false);
 
 
-    const onSubmit = async (data: { details: FormEntry[] }) => {
+    const onSubmit = async (data: { details: FormDetailMateriEntries[] }) => {
         setSubmiting(true)
         try {
             if (!materi) throw new Error("Materi harus diisi");
