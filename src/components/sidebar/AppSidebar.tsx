@@ -5,7 +5,7 @@ import Link from "next/link";
 const items = [
     {
         title: "Materi",
-        url: "#",
+        url: "/admin/materi",
         icon: Home
     },
     {
