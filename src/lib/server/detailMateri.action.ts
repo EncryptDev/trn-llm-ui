@@ -7,6 +7,9 @@ export const getDetailByMateriId = async (materiId: string) => {
         return await prisma.materiDetails.findMany({
             where: {
                 materi_id: materiId
+            },
+            orderBy: {
+                order_item: "asc"
             }
         });
 

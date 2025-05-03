@@ -31,7 +31,7 @@ export const editDetailsMateri = async (formData: FormData) => {
             }
         });
 
-        finalData.forEach(async (item, _) => {
+        finalData.forEach(async (item, index) => {
 
             let filename=""
             if(typeof item.file === "string") filename = item.file
@@ -42,7 +42,8 @@ export const editDetailsMateri = async (formData: FormData) => {
                 data: {
                     image: filename,
                     transcript:item.transcript,
-                    materi_id: materiId
+                    materi_id: materiId,
+                    order_item: index
                 }
             })
         });

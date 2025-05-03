@@ -1,4 +1,4 @@
-import { PrismaClient } from "@/@prisma/client"
+import { PrismaClient } from "@prisma/client"
 import { log } from "console"
 
 const globalForPrisma = globalThis as unknown as {

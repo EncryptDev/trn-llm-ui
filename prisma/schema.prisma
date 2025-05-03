@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/@prisma/client"
 }
 
 datasource db {
@@ -29,7 +28,8 @@ model MateriDetails {
   id         String   @id @default(cuid())
   materi_id  String
   image      String
-  transcript String
+  transcript String @db.LongText
+  order_item Int
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 

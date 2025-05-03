@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Prisma
 /src/@prisma/
+
+# Uploads
+/public/uploads/

@@ -45,13 +45,14 @@ export async function createMateri(formData: FormData) {
             if (val.file) {
                 filename = await handleUploadFile(val.file, "uploads");
             }
-            
+        
 
             await prisma.materiDetails.create({
                 data: {
                     image: filename,
                     transcript: val.transcript,
-                    materi_id: insertedMateri.id
+                    materi_id: insertedMateri.id,
+                    order_item: index
                 }
             });
 
