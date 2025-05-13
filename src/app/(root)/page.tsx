@@ -1,6 +1,9 @@
 import { getAllMateri } from "@/lib/server/materi.action"
 import MateriCard from "./MateriCard";
 
+
+export const dynamic = "force-dynamic";
+
 export default async function MainPage() {
 
     const materies = await getAllMateri();

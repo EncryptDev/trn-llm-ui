@@ -7,6 +7,9 @@ import ChatBox from "./ChatBox"
 import { useEffect, useRef, useState } from "react"
 import { ChatState } from "@/types/state"
 import Link from "next/link";
+import OfflineVoiceRecorder from "@/components/shared/OfflineVoiceRecorder";
+import { text } from "stream/consumers";
+import { set } from "react-hook-form";
 
 function page() {
 
@@ -14,6 +17,11 @@ function page() {
   const abortController = useRef<AbortController>(null);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
+  const [audioUrl, setAudioUrl] = useState('');
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [loadingSpeak, setLoadingSpeak] = useState(false);
+
+
 
 
   const handleSend = async (q?: string) => {
@@ -62,6 +70,36 @@ function page() {
     }
   };
 
+  const fetchSound = async (text: string) => {
+    try {
+
+    } catch (error) {
+      console.error("TTS error:", error);
+    } finally {
+      setLoadingSpeak(false);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/ttsx3`, {
+        method: "POST",
+        cache: "no-store",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text })
+      });
+      if (!response.ok) throw new Error("Gagal mengenerate suara");
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      setAudioUrl(url);
+
+    }
+  }
+  // Play audio when audioUrl changes
+  useEffect(() => {
+    if (audioRef.current && audioUrl) {
+      audioRef.current.load();
+      audioRef.current.play().catch(console.error);
+    }
+  }, [audioUrl]);
+
   const speak = (text: string) => {
     if ('speechSynthesis' in window) {
       const synthesis = window.speechSynthesis;
@@ -100,7 +138,7 @@ function page() {
     if (loading === false) {
       if (messages.length > 0) {
         const text = messages[messages.length - 1].content;
-        speak(text);
+        fetchSound(text);
       }
     }
   }, [loading])
@@ -126,6 +164,19 @@ function page() {
           </div>
         )}
 
+      {/* Play audio */}
+      {audioUrl && (
+        <div className="hidden">
+          <audio
+            ref={audioRef}
+            controls
+            src={audioUrl}
+            // onEnded={handleEnded}
+            autoPlay
+          />
+        </div>
+      )}
+
       {/* Text Input */}
       <div className="fixed bottom-10  px-4 ">
         <div className="flex gap-4">
@@ -136,7 +187,7 @@ function page() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <VoiceRecorder callBack={(val) => {
+          <OfflineVoiceRecorder callBack={(val) => {
             setQuery(val);
             setTimeout(() => {
               console.log("dijalankan");
