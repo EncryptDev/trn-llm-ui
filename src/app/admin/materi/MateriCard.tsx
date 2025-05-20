@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { getAllMateri } from "@/lib/server/materi.action"
+import { deleteMateri, getAllMateri } from "@/lib/server/materi.action"
 import { useMateriIdState } from "@/store/materId"
 import { PenBoxIcon, Trash2 } from "lucide-react"
 
@@ -14,6 +14,14 @@ export default function MateriCard({ materi }: { materi: Materi }) {
 
     const setId = useMateriIdState((state) => state.setId);
 
+    const handleDelete = async () => {
+        try {
+           await deleteMateri(materi.id);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <Card className="w-full min-w-80 col-span-4" key={`materi-${materi.id}`}>
 
@@ -22,7 +30,7 @@ export default function MateriCard({ materi }: { materi: Materi }) {
             </CardContent>
             <CardFooter className="flex gap-2 justify-end">
                 <Button onClick={() => setId(materi.id)} className="bg-amber-500 hover:bg-amber-600"><PenBoxIcon /></Button>
-                <Button variant={"destructive"}><Trash2 /></Button>
+                <Button onClick={handleDelete} variant={"destructive"}><Trash2 /></Button>
             </CardFooter>
         </Card>
     )

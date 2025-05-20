@@ -2,6 +2,7 @@
 
 import CountDown from "@/components/shared/CountDown";
 import { getDetailByMateriId } from "@/lib/server/detailMateri.action";
+import { getImageUrl } from "@/lib/utils";
 import { Loader2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -15,6 +16,11 @@ export default function PlayMateri({ details }: { details: DetailMateri }) {
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [done, setDone] = useState(false);
     const router = useRouter();
+
+    const [videoPlay, setVideoPlay] = useState(false);
+    const [videoSrc, setVideoSrc] = useState("/speak-video.mp4");
+    const videoRef = useRef<HTMLVideoElement | null>(null);
+
 
     const fetchSound = async (index: number) => {
         console.log(details);
@@ -59,16 +65,31 @@ export default function PlayMateri({ details }: { details: DetailMateri }) {
         if (audioRef.current && audioUrl) {
             audioRef.current.load();
             audioRef.current.play().catch(console.error);
+            setVideoPlay(true);
         }
     }, [audioUrl]);
 
     const handleEnded = () => {
+        setVideoPlay(false)
         if (indexMateri + 1 < details.length) {
-            setIndexMateri(prev => prev + 1);
+            setTimeout(() => {
+                setIndexMateri(prev => prev + 1);
+            }, 3000);
         } else {
             setDone(true);
         }
     };
+
+    //handle perubahan saat state video ganti
+    useEffect(() => {
+        if (videoRef.current) {
+            if (videoPlay) {
+                videoRef.current.play();
+            } else {
+                videoRef.current.pause();
+            }
+        }
+    }, [videoPlay])
 
     return (
         <div>
@@ -88,7 +109,7 @@ export default function PlayMateri({ details }: { details: DetailMateri }) {
                             <img
                                 className="w-[700px] object-fill rounded-md"
                                 alt="img preview"
-                                src={`/${details[indexMateri].image}`}
+                                src={getImageUrl(details[indexMateri].image)}
                             />
 
                             {loadingSpeak && (
@@ -113,6 +134,14 @@ export default function PlayMateri({ details }: { details: DetailMateri }) {
                     )}
                 </>
             )}
+
+            <video
+                ref={videoRef}
+                src={videoSrc}
+                loop
+                width={150}
+                className="fixed left-5 bottom-5 rounded-md"
+            />
         </div>
     );
 }

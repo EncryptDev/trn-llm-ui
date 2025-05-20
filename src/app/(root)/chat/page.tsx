@@ -8,8 +8,7 @@ import { useEffect, useRef, useState } from "react"
 import { ChatState } from "@/types/state"
 import Link from "next/link";
 import OfflineVoiceRecorder from "@/components/shared/OfflineVoiceRecorder";
-import { text } from "stream/consumers";
-import { set } from "react-hook-form";
+
 
 function page() {
 
@@ -148,18 +147,18 @@ function page() {
     <div className="flex flex-col justify-between items-center min-h-screen bg-gray-800 p-4 pb-24">
       {/* Admin Button */}
       <div className="fixed top-4 right-4">
-        <Link href={"/upload"}>
-          <button className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-700">Admin</button>
+        <Link href={"/"}>
+          <button className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-700">Main Menu</button>
         </Link>
       </div>
       {/* Welcome message  */}
       {messages.length > 0 ? (<ChatBox loading={loading} messages={messages} />) :
         (
           <div className="flex-grow flex flex-col justify-center items-center">
-            <Image src={"/doge.png"} alt="Logo" width={120} height={120} className="mb-5" />
+            <Image src={"/maskot.png"} alt="Logo" width={120} height={120} className="mb-5" />
             <div className="text-center">
-              <h1 className="text-3xl text-white">Halo saya training chatbot👋</h1>
-              <p className="text-lg text-gray-400">Saya siap menjawab pertanyaan anda seputar PT Surabaya Autocomp Indonesia</p>
+              <h1 className="text-3xl text-white">Hi saya adit trainer PT Surabaya Autocomp Indonesia</h1>
+              <p className="text-lg text-gray-400">Saya siap menjawab pertanyaan anda</p>
             </div>
           </div>
         )}

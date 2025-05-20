@@ -38,7 +38,10 @@ export default function CreatePage() {
             });
             formData.append("data", JSON.stringify(preparedData));
 
-            await createMateri(formData);
+            await fetch(`/api/upload/create`,{
+                method:"POST",
+                body:formData
+            });
             toast.success("Materi berhasil ditambahkan")
             // reset();
 

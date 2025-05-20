@@ -1,4 +1,4 @@
-import { Home, Upload } from "lucide-react";
+import { ArrowBigLeft, Home, Upload } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarHeader, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
 import Link from "next/link";
 
@@ -10,8 +10,13 @@ const items = [
     },
     {
         title: "Upload",
-        url: "#",
+        url: "/admin/upload",
         icon: Upload
+    },
+    {
+        title: "Back",
+        url: "/",
+        icon: ArrowBigLeft
     }
 ]
 

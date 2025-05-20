@@ -12,13 +12,13 @@ function ChatBox({ loading, messages }: ChatBoxProps) {
     
     return (
         <div className="  rounded-lg min-h-screen p-6 max-w-3xl mt-6 w-full">
-            <h2 className="text-xl text-white font-bold mb-4 text-center">Chatting</h2>
+            <h2 className="text-xl text-white font-bold mb-4 text-center">QnA</h2>
             <div className=" p-3 rounded-md h-full  overflow-y-auto flex flex-col ">
                 {messages.map((msg, index) => (
                     <React.Fragment key={index}>
                         {msg.role === "bot" && (
                             <div className='flex gap-2 items-center'>
-                                <Image src={'/doge.png'} alt='bot' width={40} height={40} />
+                                <Image src={'/maskot.png'} alt='bot' width={40} height={40} />
                                 <p className='font-light text-gray-500'>Trainer Bot</p>
                             </div>
                         )}

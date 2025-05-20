@@ -4,6 +4,7 @@ import {  PlusCircle } from "lucide-react";
 import Link from "next/link";
 import MateriCard from "./MateriCard";
 import EditMateri from "./EditMateri";
+export const dynamic = "force-dynamic";
 
 export default async function MateriPage() {
 

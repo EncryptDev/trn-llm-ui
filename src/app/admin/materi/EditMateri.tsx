@@ -55,7 +55,10 @@ export default function EditMateri() {
 
             formData.append("data", JSON.stringify(prepData));
 
-            await editDetailsMateri(formData);
+            await fetch(`/api/upload/edit`, {
+                method: "POST",
+                body: formData
+            });
             getData();
 
         } catch (err: any) {

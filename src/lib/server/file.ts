@@ -8,8 +8,11 @@ export async function handleUploadFile(file: File, savePath: string, randomizeNa
         if (file) {
             const bytes = await file.arrayBuffer();
             const buffer = Buffer.from(bytes);
+            console.log(`Save path:${savePath}`)
+
 
             const uploadDir = path.join(process.cwd(), `public/${savePath}`);
+            console.log(`Upload dir:${uploadDir}`);
 
             // ✅ Pastikan folder ada
             await mkdir(uploadDir, { recursive: true });
